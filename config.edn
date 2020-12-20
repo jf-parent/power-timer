@@ -1,0 +1,6 @@
+{:gui {:width 300 :height 500}
+ :timers [{:name "Tea" :init "5m" :ring "3s"}
+          {:name "Nap" :init "22m" :ring "1m"}
+          {:name "Standing" :init "30m" :ring "3s"}
+          {:name "Test" :init "1H30S" :ring "3s"}
+          {:name "Custom" :init "" :ring "5s" :custom true}]}
