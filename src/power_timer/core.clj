@@ -68,13 +68,6 @@
       (> m 0) (format "%02d:%02d" m s)
       :else (format "%02d" s))))
 
-(defn format-timer [str]
-  (let [{hours :hours minutes :minutes seconds :seconds} (parse-human-readable-timer str)]
-    (cond
-      (> hours 0) (format "%02d:%02d:%02d" hours minutes seconds)
-      (> minutes 0) (format "%02d:%02d" minutes seconds)
-      :else (format "%02d" seconds))))
-
 (defn get-timer-duration [str]
   (let [{total-seconds :total-seconds} (parse-human-readable-timer str)]
     (* total-seconds 1000)))
@@ -97,8 +90,8 @@
     (when (= current-key-code enter-key-code)
       (let [timer-text (seesaw/select container [:#timer-text])
             raw-str (seesaw/config timer-text :text)
-            formatted-time (format-timer raw-str)
-            total-seconds (get-timer-duration raw-str)]
+            total-seconds (get-timer-duration raw-str)
+            formatted-time (parse-total-seconds-to-human-readable total-seconds)]
         (swap! t assoc :total-duration total-seconds)
         (seesaw/config! timer-text :text formatted-time)))))
 
@@ -111,7 +104,7 @@
   (let [t (timer-lib/create-timer (:name timer-cfg) (get-timer-duration (:init timer-cfg)) (:sound timer-cfg))
         start-stop-btn (seesaw/button :id :start-stop-btn :text start-icon :tip "start")
         reset-btn (seesaw/button :text reset-icon :tip "reset")
-        input-text (seesaw/text :id :timer-text :font (seesaw.font/font :size 24) :text (format-timer (:init timer-cfg)) :enabled? (:custom timer-cfg false))
+        input-text (seesaw/text :id :timer-text :font (seesaw.font/font :size 24) :text (parse-total-seconds-to-human-readable (get-timer-duration (:init timer-cfg))) :enabled? (:custom timer-cfg false))
         panel (seesaw/vertical-panel
                :items [(seesaw/horizontal-panel :items [start-stop-btn reset-btn])
                        input-text])]

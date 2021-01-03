@@ -1,4 +1,14 @@
+* Power Timer
+Run multiple timer in parallel.
+
+** Config.edn
+#+BEGIN_SRC edn
 {:gui {:width 300 :height 500}
  :timers [{:name "Tea" :init "3m" :sound "fire-alarm"}
           {:name "Nap" :init "22m" :sound "horn"}
           {:name "Custom" :init "" :sound "bomb-siren" :custom true}]}
+#+END_SRC
+
+** GUI (seesaw)
+   
+[[resources/power-timer_gui.png]]
